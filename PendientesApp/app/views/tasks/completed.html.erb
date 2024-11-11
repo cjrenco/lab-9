@@ -1,0 +1,33 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <div class="card shadow-sm">
+        <div class="card-header bg-secondary text-white">
+          <h5>Tareas Completadas</h5>
+        </div>
+        <div class="card-body">
+          <!-- Lista de tareas completadas -->
+          <ul class="list-group">
+            <% @completed_tasks.each do |task| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>
+                  <%= task.title %>
+                  <% if task.completed_at.present? %>
+                    <small class="text-muted">(Completado el <%= task.completed_at.strftime("%d/%m/%Y a las %I:%M %p") %>)</small>
+                  <% end %>
+                </span>
+                <%= form_with url: task_path(task), method: :put, local: true do %>
+                  <%= submit_tag image_tag(asset_path("uncheck_icon.png"), alt: "Completar", class: "icon-btn"), class: "btn btn-success btn-sm" %>
+
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+        <div class="card-footer text-right">
+          <%= link_to 'Volver a pendientes', tasks_path, class: 'btn btn-primary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
